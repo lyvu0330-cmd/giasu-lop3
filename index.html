@@ -36,7 +36,6 @@
             margin: 0 auto;
         }
 
-        /* Thanh điều khiển chế độ xem */
         .role-bar {
             background-color: #2d3436;
             color: white;
@@ -67,12 +66,8 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
 
-        header h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
+        header h1 { font-size: 2rem; margin-bottom: 5px; }
 
-        /* Grid Layout */
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -81,9 +76,7 @@
         }
 
         @media (max-width: 768px) {
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
+            .grid-layout { grid-template-columns: 1fr; }
         }
 
         .card {
@@ -95,9 +88,7 @@
             transition: all 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-3px);
-        }
+        .card:hover { transform: translateY(-3px); }
 
         .card-title {
             font-size: 1.3rem;
@@ -109,24 +100,17 @@
             color: #4834d4;
         }
 
-        /* Profile Card */
         .profile-card { border-color: #ff7675; }
-
-        /* Schedule Card */
         .schedule-card { border-color: #74b9ff; }
+        
         .schedule-flex {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
         }
-        .schedule-flex input {
-            padding: 8px;
-            background: #f1f2f6;
-            border: 1px solid #ced6e0;
-        }
+        .schedule-flex input { padding: 8px; background: #f1f2f6; border: 1px solid #ced6e0; }
 
-        /* Score Dashboard */
         .score-card {
             grid-column: 1 / -1;
             text-align: center;
@@ -163,7 +147,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Buttons & Forms */
         .btn-group {
             display: flex;
             gap: 10px;
@@ -189,7 +172,6 @@
         .btn-primary { background-color: #6c5ce7; color: white; }
         .btn-mode { background-color: #6c5ce7; color: white; font-size: 0.85rem; padding: 6px 12px;}
 
-        /* Lesson Logs */
         .lesson-card { grid-column: 1 / -1; border-color: #a29bfe; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
@@ -206,7 +188,7 @@
         input:disabled, textarea:disabled { background-color: #f1f2f6; color: #636e72; cursor: not-allowed; border-color: #dfe6e9;}
 
         .lesson-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .lesson-table th, .lesson-table td { border: 1px solid #dfe6e9; padding: 12px; text-align: left; }
+        .lesson-table th, .lesson-table td { border: 1px solid #dfe6e9; padding: 12px; text-align: left; vertical-align: top;}
         .lesson-table th { background-color: #74b9ff; color: white; }
         .lesson-table tr:nth-child(even) { background-color: #f8f9fa; }
 
@@ -217,11 +199,24 @@
             font-size: 0.9rem;
             font-weight: 500;
             color: #2d3436;
+            display: block;
+            margin-top: 5px;
         }
+
+        .log-badge {
+            display: block;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .badge-score-day { background-color: #e0f7fa; color: #006064; border-left: 4px solid #00acc1; }
+        .badge-score-total { background-color: #fff3e0; color: #e65100; border-left: 4px solid #fb8c00; }
+        .badge-time { background-color: #f1f2f6; color: #57606f; font-weight: normal; font-style: italic; }
 
         .delete-btn { background: none; border: none; color: #ff7675; cursor: pointer; font-size: 1.1rem; }
         
-        /* Class ẩn phần tử khi phụ huynh xem */
         .teacher-only { display: none; }
     </style>
 </head>
@@ -243,7 +238,7 @@
     </header>
 
     <div class="card score-card" style="margin-bottom: 20px;">
-        <div class="card-title" style="justify-content: center;"><i class="fas fa-trophy" style="color:#fdcb6e;"></i> Kho Báu Điểm Tích Lũy</div>
+        <div class="card-title" style="justify-content: center;"><i class="fas fa-trophy" style="color:#fdcb6e;"></i> Kho Báu Điểm Tích Lũy Hiện Tại</div>
         <div>
             <div class="score-display" id="totalScore">0</div> Điểm
         </div>
@@ -307,35 +302,40 @@
     </div>
 
     <div class="card lesson-card">
-        <div class="card-title"><i class="fas fa-book-open"></i> Nhật Ký Các Buổi Học</div>
+        <div class="card-title"><i class="fas fa-book-open"></i> Nhật Ký & Tiến Trình Tích Điểm Buổi Học</div>
         
         <div id="addLessonForm" class="teacher-only" style="background: #f8f9fa; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
-            <h4 style="margin-bottom: 10px; color:#6c5ce7;">Thêm buổi học mới</h4>
-            <div class="grid-layout" style="grid-template-columns: 1fr 1fr; margin-bottom: 0;">
+            <h4 style="margin-bottom: 10px; color:#6c5ce7;">Thêm thông tin buổi học hôm nay</h4>
+            <div class="grid-layout" style="grid-template-columns: 1fr 1fr; margin-bottom: 10px;">
                 <div class="form-group">
                     <label>Ngày học:</label>
                     <input type="date" id="lessonDate">
                 </div>
                 <div class="form-group">
-                    <label>Nội dung bài học:</label>
-                    <input type="text" id="lessonContent" placeholder="Ví dụ: Bảng cửu chương 7...">
+                    <label>Điểm số đạt được RIÊNG hôm nay:</label>
+                    <input type="text" id="lessonScoreToday" placeholder="Ví dụ: +4 điểm (hoặc Thưởng 3 sao)">
                 </div>
+            </div>
+            <div class="form-group">
+                <label>Nội dung bài học:</label>
+                <input type="text" id="lessonContent" placeholder="Ví dụ: Bảng cửu chương 7...">
             </div>
             <div class="form-group">
                 <label>Bài tập về nhà (BTVN):</label>
                 <textarea id="lessonHomework" rows="2" placeholder="Ví dụ: Làm bài 1, 2 trang 45..."></textarea>
             </div>
-            <button class="btn-primary" onclick="addLesson()"><i class="fas fa-plus"></i> Lưu Buổi Học</button>
+            <button class="btn-primary" onclick="addLesson()"><i class="fas fa-plus"></i> Lưu Buổi Học & Chốt Điểm</button>
         </div>
 
         <div style="overflow-x: auto;">
             <table class="lesson-table">
                 <thead>
                     <tr>
-                        <th style="width: 15%;">Ngày</th>
-                        <th style="width: 42%;">Nội dung bài giảng</th>
-                        <th style="width: 42%;">Bài tập về nhà (BTVN)</th>
-                        <th style="width: 1%;" class="teacher-only" id="thDelete">Xóa</th>
+                        <th style="width: 15%;">Ngày Học</th>
+                        <th style="width: 35%;">Nội dung bài giảng</th>
+                        <th style="width: 20%;">Bài tập về nhà</th>
+                        <th style="width: 25%;">Báo Cáo Tích Lũy</th>
+                        <th style="width: 5%;" class="teacher-only" id="thDelete">Xóa</th>
                     </tr>
                 </thead>
                 <tbody id="lessonTableBody">
@@ -346,28 +346,43 @@
 </div>
 
 <script>
-    // Cấu hình mật khẩu mở khóa (Bạn có thể tự đổi 'giasu2926' thành mật khẩu khác bạn thích)
+    // BẠN HÃY ĐỔI MẬT KHẨU Ở ĐÂY NHÉ:
     const TEACHER_PASSWORD = "giasu2026";
-    let isTeacherMode = false; // Mặc định mở đầu là chế độ Phụ huynh xem
+    let isTeacherMode = false; 
 
     let studentData = {
         name: "Nguyễn Minh Anh",
         class: "Lớp 3A1",
         level: "Khá (Cần cải thiện tốc độ tính nhẩm)",
-        score: 10,
+        score: 12,
         schedule: { day1: "Thứ Ba", time1: "19:00 - 20:30", day2: "Thứ Năm", time2: "19:00 - 20:30", note: "Học định kỳ hàng tuần" },
         lessons: [
-            {date: "2026-06-09", content: "Ôn tập phép nhân, làm quen bảng cửu chương 6", homework: "Lập lại bảng cửu chương 6 ba lần vào vở"},
-            {date: "2026-06-11", content: "Luyện tập giải toán có lời văn (dạng toán gấp lên một số lần)", homework: "Làm bài tập 3, 4 trang 20 sách giáo khoa"}
+            {
+                date: "2026-06-09", 
+                content: "Ôn tập phép nhân, làm quen bảng cửu chương 6", 
+                homework: "Lập lại bảng cửu chương 6 ba lần vào vở",
+                scoreToday: "+3 Điểm",
+                scoreTotalSnapshot: "10 Điểm",
+                rewardStatus: "💪 Đang tích lũy",
+                saveTimestamp: "09/06/2026 lúc 20:32"
+            },
+            {
+                date: "2026-06-11", 
+                content: "Luyện tập giải toán có lời văn (dạng toán gấp lên một số lần)", 
+                homework: "Làm bài tập 3, 4 trang 20 SGK",
+                scoreToday: "+2 Điểm",
+                scoreTotalSnapshot: "12 Điểm",
+                rewardStatus: "💪 Đang tích lũy",
+                saveTimestamp: "11/06/2026 lúc 20:35"
+            }
         ]
     };
 
     window.onload = function() {
-        if(localStorage.getItem('giasu_student_data_v3')) {
-            studentData = JSON.parse(localStorage.getItem('giasu_student_data_v3'));
+        if(localStorage.getItem('giasu_student_data_v4')) {
+            studentData = JSON.parse(localStorage.getItem('giasu_student_data_v4'));
         }
         
-        // Điền dữ liệu
         document.getElementById('studentName').value = studentData.name;
         document.getElementById('studentClass').value = studentData.class;
         document.getElementById('studentLevel').value = studentData.level;
@@ -382,11 +397,10 @@
         renderLessons();
     };
 
-    // Hàm chuyển đổi qua lại giữa Phụ Huynh và Gia Sư bằng mật khẩu
     function toggleMode() {
         if (!isTeacherMode) {
             let pass = prompt("Vui lòng nhập mật khẩu của Gia sư để chỉnh sửa:");
-            if (pass === TEACHER_PASSWORD) {
+            if (pass === TEACHER_PASSWORD {
                 isTeacherMode = true;
                 alert("🔓 Đã chuyển sang chế độ Gia Sư. Bạn có thể sửa dữ liệu!");
                 applyRoleUI();
@@ -400,7 +414,6 @@
         }
     }
 
-    // Cập nhật giao diện ẩn/hiện hoặc khóa input dựa trên quyền truy cập
     function applyRoleUI() {
         const roleLabel = document.getElementById('roleLabel');
         const btnToggleMode = document.getElementById('btnToggleMode');
@@ -412,10 +425,7 @@
             roleLabel.innerText = "🏫 Chế độ: Gia Sư (Đang chỉnh sửa)";
             roleLabel.className = "role-badge badge-teacher";
             btnToggleMode.innerHTML = "<i class='fas fa-sign-out-alt'></i> Khóa lại (Xem)";
-            
-            // Mở khóa các ô nhập liệu
             editableInputs.forEach(input => input.disabled = false);
-            // Hiện các thành phần ẩn
             teacherElements.forEach(el => el.style.display = 'flex');
             document.getElementById('addLessonForm').style.display = 'block';
             if(thDelete) thDelete.style.display = 'table-cell';
@@ -423,15 +433,12 @@
             roleLabel.innerText = "👀 Chế độ: Phụ huynh (Chỉ xem)";
             roleLabel.className = "role-badge badge-parent";
             btnToggleMode.innerHTML = "<i class='fas fa-lock'></i> Mở khóa Gia sư";
-            
-            // Khóa các ô nhập liệu
             editableInputs.forEach(input => input.disabled = true);
-            // Ẩn các nút thao tác của gia sư
             teacherElements.forEach(el => el.style.display = 'none');
             document.getElementById('addLessonForm').style.display = 'none';
             if(thDelete) thDelete.style.display = 'none';
         }
-        renderLessons(); // Vẽ lại bảng học để ẩn/hiện nút xóa từng hàng
+        renderLessons(); 
     }
 
     function saveAllData() {
@@ -476,24 +483,56 @@
         }
     }
 
+    // Hàm lấy thời gian hiện tại định dạng DD/MM/YYYY lúc HH:MM
+    function getCurrentDateTimeString() {
+        const now = new Date();
+        const date = String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear();
+        const time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+        return `${date} lúc ${time}`;
+    }
+
     function addLesson() {
         if(!isTeacherMode) return;
         const date = document.getElementById('lessonDate').value;
         const content = document.getElementById('lessonContent').value;
         const homework = document.getElementById('lessonHomework').value;
+        const scoreToday = document.getElementById('lessonScoreToday').value || "Chưa tính";
 
         if(!date || !content) {
             alert("Bạn ơi, hãy nhập đầy đủ Ngày học và Nội dung bài học nhé!");
             return;
         }
 
-        studentData.lessons.push({date, content, homework});
+        // Tự động tính toán trạng thái quà tại thời điểm lưu bài
+        let rewardStatus = "💪 Đang tích lũy";
+        if (studentData.score >= 20) {
+            rewardStatus = "🎁 Đủ điều kiện ĐỔI QUÀ";
+        } else if (studentData.score < 5) {
+            rewardStatus = "🚨 Dưới tiêu chuẩn";
+        }
+
+        const scoreTotalSnapshot = studentData.score + " Điểm";
+        const saveTimestamp = getCurrentDateTimeString();
+
+        // Đẩy dữ liệu vào mảng lưu trữ
+        studentData.lessons.push({
+            date, 
+            content, 
+            homework, 
+            scoreToday, 
+            scoreTotalSnapshot, 
+            rewardStatus, 
+            saveTimestamp
+        });
+
         renderLessons();
         saveToLocalStorage();
 
+        // Xóa sạch ô nhập để buổi sau điền tiếp
         document.getElementById('lessonDate').value = "";
         document.getElementById('lessonContent').value = "";
         document.getElementById('lessonHomework').value = "";
+        document.getElementById('lessonScoreToday').value = "";
     }
 
     function renderLessons() {
@@ -506,13 +545,26 @@
             const formattedDate = lesson.date.split('-').reverse().join('/');
             const tr = document.createElement('tr');
             
-            // Xử lý cột nút Xóa tùy theo chế độ
             let deleteTd = isTeacherMode ? `<td><button class="delete-btn" onclick="deleteLesson(${studentData.lessons.indexOf(lesson)})"><i class="fas fa-trash-alt"></i></button></td>` : '';
             
+            // Xử lý màu sắc hiển thị cho Trạng thái quà của từng buổi
+            let statusStyle = "color: #e65100;";
+            if (lesson.rewardStatus && lesson.rewardStatus.includes("🎁")) {
+                statusStyle = "color: #00b894; font-weight: bold;";
+            } else if (lesson.rewardStatus && lesson.rewardStatus.includes("🚨")) {
+                statusStyle = "color: #ff7675; font-weight: bold;";
+            }
+
             tr.innerHTML = `
                 <td><b>${formattedDate}</b></td>
                 <td>${lesson.content}</td>
                 <td><span class="btvn-badge"><i class="fas fa-pencil-alt"></i> ${lesson.homework || 'Không có BTVN'}</span></td>
+                <td>
+                    <span class="log-badge badge-score-day"><i class="fas fa-plus-minus"></i> Hôm nay: ${lesson.scoreToday || '0'}</span>
+                    <span class="log-badge badge-score-total"><i class="fas fa-chart-line"></i> Tích lũy lúc đó: ${lesson.scoreTotalSnapshot || '0'}</span>
+                    <span style="font-size: 0.85rem; padding-left: 8px; ${statusStyle}">${lesson.rewardStatus || '💪 Đang tích lũy'}</span>
+                    <span class="log-badge badge-time"><i class="far fa-clock"></i> Lưu: ${lesson.saveTimestamp || 'Không rõ'}</span>
+                </td>
                 ${deleteTd}
             `;
             tbody.appendChild(tr);
@@ -529,7 +581,7 @@
     }
 
     function saveToLocalStorage() {
-        localStorage.setItem('giasu_student_data_v3', JSON.stringify(studentData));
+        localStorage.setItem('giasu_student_data_v4', JSON.stringify(studentData));
     }
 </script>
 
