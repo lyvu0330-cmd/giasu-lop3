@@ -39,13 +39,24 @@
         .role-bar {
             background-color: #2d3436;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            position: relative; /* Đảm bảo nút không bị các thành phần khác đè lên */
+            z-index: 9999;       /* Đưa thanh này lên lớp trên cùng của màn hình */
+        }
+        
+        .btn-mode {
+            background-color: #6c5ce7; 
+            color: white; 
+            font-size: 0.9rem; 
+            padding: 8px 16px;
+            cursor: pointer;    /* Hiện hình bàn tay khi di chuột vào nút */
+            
         }
 
         .role-badge {
